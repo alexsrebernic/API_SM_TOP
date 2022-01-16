@@ -11,7 +11,9 @@
   "dependencies": {
     "async": "^3.2.3",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
     "check-password-strength": "^2.0.3",
+    "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "debug": "^4.3.3",
@@ -21,9 +23,12 @@
     "express-validator": "^6.14.0",
     "helmet": "^5.0.1",
     "http-errors": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "mongoose": "^6.1.6",
+    "morgan": "^1.10.0",
     "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
   }
 }
