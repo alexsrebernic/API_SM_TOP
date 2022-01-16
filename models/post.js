@@ -13,8 +13,12 @@ const postSchema = new Schema(
         author:{type:Schema.Types.ObjectId, ref:'User',required:true},
         date:{type:String,required:true},
         published:{type:Boolean,required:true},
-        social_media_urls:[{type:String,required:false}]
+        comments:[{type:String,}],
+        social_media_urls:[{type:String,required:false}],
+        likes:{type:Number,required:false},
+        dislikes:{type:Number,required:false}
     }
 )
+postSchema
 
 module.exports = mongoose.model('Post',postSchema)

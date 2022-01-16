@@ -2,18 +2,22 @@ var express = require('express');
 var router = express.Router();
 
 
-// GET USERS AND POSTS ROUTE
+//  USERS , POSTS AND MESSAGES 
 router.get('/',)
 
-// USEERS ROUTERS
+// USER ROUTERS
 router.get('/users',)
 router.get('/users/:id',)
-
 router.post('/users')
 
-// ARTICLES ROUTERS
+// POST ROUTERS
 router.get('/posts',)
 router.get('/posts/:id',)
-
 router.post('/posts')
+router.delete('/posts/:id')
 
+// MESSAGES ROUTERS
+router.get('/messages')
+router.get('/messages/:id')
+router.post('/messages')
+router.delete('/messages/:id')
