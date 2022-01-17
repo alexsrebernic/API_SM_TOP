@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const user_controller = require('../controllers/userController')
 const post_controller = require("../controllers/postControllers")
+const comment_controller = require('../controllers/commentController')
 const async = require('async')
 //  USERS , POSTS AND MESSAGES 
 router.get('/')
@@ -17,9 +18,9 @@ router.post('/posts',post_controller.posts_post)
 router.delete('/posts/:id',post_controller.post_delete)
 
 // MESSAGES ROUTERS
-router.get('/messages',)
-router.get('/messages/:id',)
-router.post('/messages',)
-router.delete('/messages/:id',)
+router.get('/comments',comment_controller.comments_get)
+router.get('/comments/:id',comment_controller.comment_get)
+router.post('/comments',comment_controller.comments_post)
+router.delete('/comments/:id',comment_controller.comment_delete)
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const async = require('async');
 const Post = require('../models/post')
 const { body,validationResult } = require('express-validator');
+const moment = require("moment")
 
 exports.posts_get = function(req,res,next){
     Post.find((err,results) => {
@@ -21,7 +22,7 @@ exports.post_get = function(req,res,next){
     })
 }
 exports.posts_post = function(req,res,next){
-    const {cover_img,title,sub_title,content,images,author,date,published,comments,social_media_urls,likes,dislikes} = req.body;
+    const {cover_img,title,sub_title,content,images,author,published,comments,social_media_urls,likes,dislikes} = req.body;
 
     (req, res, next) => {
         if(!(images instanceof Array)){
@@ -57,7 +58,7 @@ exports.posts_post = function(req,res,next){
             content:content,
             images:images,
             author:author,
-            date:date,
+            date:moment().format('MMMM Do YYYY, h:mm:ss a'),
             published:published,
             comments:null,
             social_media_urls:social_media_urls,
