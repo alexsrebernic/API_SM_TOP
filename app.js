@@ -3,8 +3,6 @@ var express = require('express');
 const mongoose = require('mongoose')
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const passport = require("passport");
-const flash = require('connect-flash');
 const dotenv = require('dotenv')
 const bodyParser = require("body-parser");
 var compression = require('compression');
@@ -26,10 +24,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(cookieParser());
 app.use(compression()); 
+
 app.use('/api',apiRouter)
 
 app.use(function(req, res, next) {
@@ -41,7 +38,7 @@ app.use(function(req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-  
+    console.log(err)
     // render the error page
     res.status(err.status || 500);
     res.status(err.status || 500);

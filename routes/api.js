@@ -3,20 +3,11 @@ var router = express.Router();
 const user_controller = require('../controllers/userController')
 const async = require('async')
 //  USERS , POSTS AND MESSAGES 
-router.get('/',function(req,res,next){
-    async.parallel({
-        user:user_controller.users_get
-    },(err,result) => {
-        console.log(result)
-        if(err){return next(err)}
-        res.json(result)
-    })
-})
+router.get('/')
 
 // USER ROUTERS
-router.get('/users',)
-router.get('/users/:id',)
-router.post('/users',)
+router.get('/users',user_controller.users_get)
+router.post('/users',user_controller.users_log_in_post)
 
 // POST ROUTERS
 router.get('/posts',)
