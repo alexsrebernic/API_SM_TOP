@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
-const { DateTime } = require("luxon");
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema(
     {
-        cover_img:{type:File,required:true},
+        cover_img:{type:Buffer,required:false},
         title:{type:String,required:true,maxlength:30,minlength:1},
         sub_title:{type:String,required:false,maxlength:30,minlength:1},
         content:{type:String,required:true,minlength:1},
-        images:[{type:File,required:false}],
+        images:[{type:Buffer,required:false}],
         author:{type:Schema.Types.ObjectId, ref:'User',required:true},
         date:{type:String,required:true},
         published:{type:Boolean,required:true},
@@ -18,6 +17,5 @@ const postSchema = new Schema(
         dislikes:{type:Number,required:false}
     }
 )
-postSchema
 
 module.exports = mongoose.model('Post',postSchema)

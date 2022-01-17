@@ -21,23 +21,27 @@ exports.users_log_in_post = function(req,res,next){
     let { username,password } = req.body
     User.findOne({username},(err,user) => {
         if(err) {next(err)}
-        if(!(user)){return res.status(404).json({
+        if(!(user)){
+            return res.status(404).json({
             message: "No user founded",
         })}
-        if(user.username !== username){return res.status(401).json({
+        if(user.username !== username){
+            return res.status(401).json({
             message: "Wrong username",
         })}
         bcrypt.compare(password, user.password, (err, result) => {
             if(err){console.log(err)}
             if (result) {
-              jwt.sign({user},'secretkey',(err,token) => {
+              jwt.sign({user},process.env.SECRET_KEY_JWT,(err,token) => {
                   res.json({
                       message:'Auth succesfull',
                       token:token
                   })
               })
             } else {
-            return res.status(401).json({message: "Wrong password",})
+            return res.status(401).json({
+                message: "Wrong password"
+            })
             }
           })
         
