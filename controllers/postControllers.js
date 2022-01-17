@@ -36,7 +36,12 @@ exports.posts_post = function(req,res,next){
             else
             social_media_urls = new Array(social_media_urls);
         }
-        
+        if(!(comments instanceof Array)){
+            if(typeof comments ==='undefined')
+            comments = [];
+            else
+            comments = new Array(comments);
+        }
         next();
     }
     body('title', 'Title must not be empty.').trim().isLength({ min: 1 }).escape(),
