@@ -6,7 +6,6 @@ var logger = require('morgan');
 const dotenv = require('dotenv')
 const bodyParser = require("body-parser");
 var compression = require('compression');
-const admin = require('../blog-api/addUserInDB')
 dotenv.config()
 const app = express()
 
