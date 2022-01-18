@@ -3,10 +3,16 @@ const Schema = mongoose.Schema;
 
 var userSchema = new Schema(
     {
-      profileImg:{type:Buffer,required:true},
-      username: {type: String, required: true, maxLength: 25},
+      profileImg:{type:Buffer,required:false},
+      email:{type:String,required:true},
+      first_name: {type: String, required: true, maxLength: 25},
+      last_name: {type: String, required: true, maxLength: 25},
+      full_name:{type:String,required:true},
+      date_of_birth:{type:Date,required:true},
+      gender:{type:String,required:false},
       password: {type:String,required:true},
       details:{type:String,required:false},
+      location:{type:String,required:false},
       posts:[{type:Schema.Types.ObjectId,required:false,ref:"Post"}],
       friends:[{type:Schema.Types.ObjectId,required:false,ref:"User"}],
       chats:[{type:Schema.Types.ObjectId,required:false,ref:"Chat"}],

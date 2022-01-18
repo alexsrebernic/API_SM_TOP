@@ -32,13 +32,10 @@ exports.comments_post = (req,res,next) => {
     }
     const comment = new Comment({
         content:content,
-        profileImg:`https://ui-avatars.com/api/?background=random&name=${author.replace(/\s/g, '+')}&rounded=true`,
         author:author,
         date:moment().format('MMMM Do YYYY, h:mm:ss a'),
-        likes:null,
-        dislikes:null
     }).save(err => {
         if(err){return next(err)}
-        return res.status(200).json({message:"comment created"})
+        return res.status(201)
     })
 }

@@ -1,4 +1,5 @@
 var createError = require('http-errors');
+const http = require('http')
 var express = require('express');
 const mongoose = require('mongoose')
 var cookieParser = require('cookie-parser');
@@ -6,9 +7,11 @@ var logger = require('morgan');
 const dotenv = require('dotenv')
 const bodyParser = require("body-parser");
 var compression = require('compression');
+const { Server } = require('socket.io')
 dotenv.config()
 const app = express()
-
+const server = http.createServer(app)
+const io = new Server(server)
 
 // MONGO DB CONNECTION
 var dev_db_url = 'mongodb+srv://cooluser:coolpassword@cluster0-mbdj7.mongodb.net/local_library?retryWrites=true'
@@ -16,9 +19,8 @@ var mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-admin()
 
-const apiRouter = require('../blog-api/routes/api')
+const apiRouter = require('../social_media_api/routes/api')
 
 app.use(logger('dev'));
 app.use(express.json());

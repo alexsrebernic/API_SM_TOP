@@ -8,8 +8,8 @@ const postSchema = new Schema(
         author:{type:Schema.Types.ObjectId, ref:'User',required:true},
         date:{type:String,required:true},
         comments:[{type:Schema.Types.ObjectId,required:false,ref:'Comment'}],
-        likes:{type:Number,required:false},
-        dislikes:{type:Number,required:false}
+        likes:[{type:Schema.Types.ObjectId,required:false,ref:'User'}],
+        dislikes:[{type:Schema.Types.ObjectId,required:false,ref:'User'}]
     }
 )
 
