@@ -23,7 +23,7 @@ mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-const apiRouter = require('../social_media_api/routes/api')
+const apiRouter = require('./routes/api')
 
 app.use(logger('dev'));
 app.use(express.json());
