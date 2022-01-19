@@ -14,6 +14,7 @@ exports.users_get = function (req,res,next){
             .exec(callback)
         }
     },function(err,users) {
+        if(!(users)){return res.status(404).json({message:"There are no users"})}
         if(err) {return next(err)}
         return res.status(200).json(users)
     })
@@ -21,11 +22,17 @@ exports.users_get = function (req,res,next){
 
 exports.user_get = function (req,res,next){
     User.findById(req.params.id,function(err,user) {
+        if(!(user)){return res.status(404).json({message:"User doesn't exists"})}
         if(err){return next(err)}
         return res.status(200).json(user)
     })
 }
-
+exports.user_delete = function(req,res,next){
+    User.findByIdAndDelete(req.params.id,(err,user) => {
+        if(err){return next(err)}
+        return res.status(200)
+    })
+}
 exports.users_sign_up_post = function(req,res,next){
     const {email,password,secondpassword,first_name,last_name,date_of_birth,gender,location} = req.body
     if(!(Isemail.validate(email))){return res.status(401).json({message:"Email is invalid"})}

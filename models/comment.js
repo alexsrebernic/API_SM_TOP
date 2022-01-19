@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
-    content:{type:String,required:true,minlength:1},
+    content:{type:String,required:false,minlength:1},
     author:{type:Schema.Types.ObjectId, ref:"User",required:true},
+    image:{type:Buffer,required:false},
     date:{type:String,required:true},
     likes:[{type:Schema.Types.ObjectId,required:false,ref:'User'}],
     dislikes:[{type:Schema.Types.ObjectId,required:false,ref:'User'}],

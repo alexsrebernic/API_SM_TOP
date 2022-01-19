@@ -9,10 +9,10 @@ router.get('/')
 
 // USER ROUTERS
 router.get('/users',user_controller.users_get)
-router.get('/users/:id')
+router.get('/users/:id',user_controller.user_get)
 router.post('/users/sign_up',user_controller.users_sign_up_post)
 router.post('/users/log_in',user_controller.users_log_in_post)
-router.delete('/users/:id')
+router.delete('/users/:id',user_controller.user_delete)
 
 // POST ROUTERS
 router.get('/posts',post_controller.posts_get)

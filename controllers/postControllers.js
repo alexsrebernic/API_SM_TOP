@@ -17,15 +17,14 @@ exports.post_delete = function(req,res,next){
 }
 exports.post_get = function(req,res,next){
     Post.findById(req.params.id,(err,post) => {
+        if(!(post)) return res.status(404).json({message:"Post doesn't exists"})
         if(err){return next(err)}
         return res.status(200).json({message:"Post send",post})
     })
 }
 exports.posts_post = function(req,res,next){
     const {content,images,author} = req.body;
-
-    body('content', 'Summary must not be empty.').trim().isLength({ min: 1 }).escape(),
-    body('author', 'ISBN must not be empty').trim().isLength({ min: 1 }).escape(),
+    body('content', 'Content m.').trim().isLength({ min: 1 }).escape(),
     body('date.*').escape();
         const errors = validationResult(req);
         if(!(errors.isEmpty())){
@@ -37,10 +36,9 @@ exports.posts_post = function(req,res,next){
             author:author,
             date:moment().format('MMMM Do YYYY, h:mm:ss a'),
           
-        })
-        post.save((err) => {
+        }).save((err) => {
             if(err){return next(err)};
-            res.status(201)
+            res.status(201).json({message:"post created"})
         })
-    
+    console.log(post)
 }

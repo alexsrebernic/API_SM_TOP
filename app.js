@@ -12,6 +12,9 @@ dotenv.config()
 const app = express()
 const server = http.createServer(app)
 const io = new Server(server)
+io.on("connection",(socket) => {
+  console.log('A user is connected')
+})
 
 // MONGO DB CONNECTION
 var dev_db_url = 'mongodb+srv://cooluser:coolpassword@cluster0-mbdj7.mongodb.net/local_library?retryWrites=true'
@@ -40,7 +43,6 @@ app.use(function(req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-    console.log(err)
     // render the error page
     res.status(err.status || 500);
     res.status(err.status || 500);
@@ -48,7 +50,8 @@ app.use(function(req, res, next) {
       message: err.message,
       error: err
     });  });
-  app.listen(3000,() => {
-      console.log('app running in port 3000')
-  })
-  module.exports = app;
+server.listen(3000,() => {
+  console.log('listening on port 3000')
+})
+module.exports  = io
+module.exports = app;
