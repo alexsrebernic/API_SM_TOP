@@ -78,11 +78,7 @@ exports.users_log_in_post = function(req,res,next){
         if(err) {next(err)}
         if(!(user)){
             return res.status(404).json({
-            message: "No user founded",
-        })}
-        if(user.email !== email){
-            return res.status(401).json({
-            message: "Wrong email",
+            message: "User not found",
         })}
         bcrypt.compare(password, user.password, (err, result) => {
             if(err){console.log(err)}
