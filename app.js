@@ -58,6 +58,5 @@ app.use(function(req, res, next) {
 server.listen(process.env.PORT || 4000,() => {
   console.log('listening on port 3000')
 })
-module.exports = verifyToken
 module.exports  = io
 module.exports = app;
