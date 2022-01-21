@@ -28,7 +28,7 @@ exports.user_get = function (req,res,next){
     })
 }
 exports.user_current_get = function(req,res,next){
-    console.log(req.token)
+    console.log(req)
     jwt.verify(req.token,process.env.SECRET_KEY_JWT,(err,authData)=> {
         if(err){return res.status(403)}
         return res.status(200).json({authData})
