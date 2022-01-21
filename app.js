@@ -25,7 +25,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const apiRouter = require('./routes/api')
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000/sign_up_or_login");
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
@@ -54,7 +54,7 @@ app.use(function(req, res, next) {
       message: err.message,
       error: err
     });  });
-server.listen(process.env.PORT || 3000,() => {
+server.listen(process.env.PORT || 4000,() => {
   console.log('listening on port 3000')
 })
 module.exports  = io

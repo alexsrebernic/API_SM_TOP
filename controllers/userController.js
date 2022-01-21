@@ -72,6 +72,7 @@ exports.users_sign_up_post = function(req,res,next){
 }
 
 exports.users_log_in_post = function(req,res,next){
+    console.log(req)
     let { email,password } = req.body
     User.findOne({email},(err,user) => {
         if(err) {next(err)}
