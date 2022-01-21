@@ -29,6 +29,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -57,5 +58,6 @@ app.use(function(req, res, next) {
 server.listen(process.env.PORT || 4000,() => {
   console.log('listening on port 3000')
 })
+module.exports = verifyToken
 module.exports  = io
 module.exports = app;

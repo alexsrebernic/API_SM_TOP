@@ -2,7 +2,6 @@ const async = require('async');
 const { body,validationResult } = require('express-validator');
 const Comment = require('../models/comment')
 const moment = require("moment")
-
 exports.comments_get = (req,res,next) => {
     Comment.find((err,comments) => {
         if(!(comments.length)){return res.status(404).json({message:"There are no comments"})}
