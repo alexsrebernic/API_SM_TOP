@@ -27,6 +27,12 @@ exports.user_get = function (req,res,next){
         return res.status(200).json(user)
     })
 }
+exports.user_current_get = function(req,res,next){
+    jwt.verify(req.token,process.env.SECRET_KEY_JWT,(err,authData)=> {
+        if(err){return res.status(403)}
+        return res.status(200).json({authData})
+    })
+}
 exports.user_delete = function(req,res,next){
     User.findByIdAndDelete(req.params.id,(err,user) => {
         if(err){return next(err)}
