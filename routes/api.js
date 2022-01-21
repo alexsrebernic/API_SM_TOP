@@ -22,8 +22,8 @@ router.get('/')
 // USER ROUTERS
 router.get('/users',verifyToken,user_controller.users_get)
 router.get('/users/:id',verifyToken,user_controller.user_get)
-router.post('/users/sign_up',verifyToken,user_controller.users_sign_up_post)
-router.post('/users/log_in',verifyToken,user_controller.users_log_in_post)
+router.post('/users/sign_up',user_controller.users_sign_up_post)
+router.post('/users/log_in',user_controller.users_log_in_post)
 router.delete('/users/:id',verifyToken,user_controller.user_delete)
 
 // POST ROUTERS
