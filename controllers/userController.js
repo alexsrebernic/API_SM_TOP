@@ -90,7 +90,7 @@ exports.users_log_in_post = function(req,res,next){
         bcrypt.compare(password, user.password, (err, result) => {
             if(err){console.log(err)}
             if (result) {
-              jwt.sign({user: user._id},process.env.SECRET_KEY_JWT,{expiresIn: '5h' },(err,token) => {
+              jwt.sign({user: user},process.env.SECRET_KEY_JWT,{expiresIn: '5h' },(err,token) => {
                   res.json({
                       message:'Auth succesfull',
                       token:token
