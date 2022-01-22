@@ -1,5 +1,4 @@
 var createError = require('http-errors');
-const http = require('http')
 var express = require('express');
 const mongoose = require('mongoose')
 var cookieParser = require('cookie-parser');
@@ -7,14 +6,11 @@ var logger = require('morgan');
 const dotenv = require('dotenv')
 const bodyParser = require("body-parser");
 var compression = require('compression');
-const { Server } = require('socket.io')
 dotenv.config()
 const app = express()
+const http = require('http')
 const server = http.createServer(app)
-const io = new Server(server)
-io.on("connection",(socket) => {
-  console.log('A user is connected')
-})
+const io = require('./utils/websocket');
 
 // MONGO DB CONNECTION
 var dev_db_url = 'mongodb+srv://cooluser:coolpassword@cluster0-mbdj7.mongodb.net/local_library?retryWrites=true'
@@ -56,7 +52,6 @@ app.use(function(req, res, next) {
       error: err
     });  });
 server.listen(process.env.PORT || 4000,() => {
-  console.log('listening on port 3000')
+  console.log('listening on port 4000')
 })
-module.exports  = io
-module.exports = app;
+module.exports = app

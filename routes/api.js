@@ -39,4 +39,6 @@ router.get('/comments/:id',verifyToken,comment_controller.comment_get)
 router.post('/comments',verifyToken,comment_controller.comments_post)
 router.delete('/comments/:id',verifyToken,comment_controller.comment_delete)
 
+
+
 module.exports = router;
