@@ -19,7 +19,6 @@ exports.users_get = function (req,res,next){
         return res.status(200).json(users)
     })
 }
-
 exports.user_get = function (req,res,next){
     User.findById(req.params.id,function(err,user) {
         if(!(user)){return res.status(404).json({message:"User doesn't exists"})}
