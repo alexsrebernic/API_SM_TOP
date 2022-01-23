@@ -3,7 +3,8 @@ const Post = require('../models/post')
 const jwt = require("jsonwebtoken");
 const { body,validationResult } = require('express-validator');
 const io = require('../utils/websocket/index')
-const moment = require("moment")
+const moment = require("moment");
+const User = require('../models/user');
 
 exports.posts_get = function(req,res,next){
     Post
@@ -54,6 +55,9 @@ exports.posts_post = function(req,res,next){
                 if(err){return next(err)};
                 console.log(io)
                 io.emit('post:create',postSaved)
+                User.findByIdAndUpdate(authData._id,{"$push":{"posts":postSaved}},(err) => {
+                    if(err){return next(err)}
+                })
                 res.status(201).json({message:"post created",id:postSaved._id})
             })
     
