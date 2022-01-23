@@ -52,9 +52,10 @@ exports.posts_post = function(req,res,next){
                 
             }).save((err) => {
                 if(err){return next(err)};
+                console.log(io)
                 io.emit('post:create',post)
                 console.log(post)
-                res.status(201).json({message:"post created"})
+                res.status(201).json({message:"post created",io})
             })
     
     })
