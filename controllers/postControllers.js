@@ -57,7 +57,7 @@ exports.posts_post = function(req,res,next){
                 io.emit('post:create',postSaved)
                 User.findByIdAndUpdate(authData._id,{"$push":{"posts":postSaved}},(err,user) => {
                     if(err){return next(err)}
-                res.status(201).json({message:"post created",id:postSaved._id,user})
+                res.status(201).json({message:"post created",id:postSaved._id,user,authData})
 
                 })
             })
