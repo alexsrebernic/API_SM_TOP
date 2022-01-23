@@ -9,6 +9,7 @@ exports.posts_get = function(req,res,next){
     .find()
     .sort({'date':-1})
     .limit(10)
+    .populate("author",{"full_name":1,"profileImg":1,"_id":1})
     .exec((err,posts) => {
         if(err){next(err)}
         return res.status(200).json(posts)
