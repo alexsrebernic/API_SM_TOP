@@ -1,4 +1,4 @@
-const io = require('socket.io')(3001,{cors:'localhost:3001'})
+const io = require('socket.io')(3001,{cors:'localhost:3000'})
 
 
 io.on("connection",socket => {
