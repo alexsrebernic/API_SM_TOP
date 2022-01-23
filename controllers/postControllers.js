@@ -48,11 +48,12 @@ exports.posts_post = function(req,res,next){
                 content:content,
                 images:images,
                 author:author,
-                date:moment().format('MMMM Do YYYY, h:mm:ss a'),
+                date:moment().startOf('hour').fromNow(),
                 
             }).save((err) => {
                 if(err){return next(err)};
                 io.emit('post:create',post)
+                console.log(post)
                 res.status(201).json({message:"post created"})
             })
     
