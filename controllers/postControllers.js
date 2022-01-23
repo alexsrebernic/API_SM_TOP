@@ -2,6 +2,7 @@ const async = require('async');
 const Post = require('../models/post')
 const jwt = require("jsonwebtoken");
 const { body,validationResult } = require('express-validator');
+const io = require('../utils/websocket/index')
 const moment = require("moment")
 
 exports.posts_get = function(req,res,next){
@@ -51,7 +52,8 @@ exports.posts_post = function(req,res,next){
                 
             }).save((err) => {
                 if(err){return next(err)};
-                res.status(201).json({message:"post created",authData})
+                io.emit('post:create',post)
+                res.status(201).json({message:"post created"})
             })
     
     })
