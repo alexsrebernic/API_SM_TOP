@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 var userSchema = new Schema(
     {
-      profileImg:{type:Buffer || String,required:false},
+      profile_img:{type:Buffer ||  Boolean,required:false},
       email:{type:String,required:true},
       first_name: {type: String, required: true, maxLength: 25},
       last_name: {type: String, required: true, maxLength: 25},
