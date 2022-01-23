@@ -10,7 +10,7 @@ dotenv.config()
 const app = express()
 const http = require('http')
 const server = http.createServer(app)
-const io = require('./utils/websocket');
+const io = require('./utils/websocket/index');
 
 // MONGO DB CONNECTION
 var dev_db_url = 'mongodb+srv://cooluser:coolpassword@cluster0-mbdj7.mongodb.net/local_library?retryWrites=true'
