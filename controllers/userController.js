@@ -66,7 +66,6 @@ exports.users_sign_up_post = function(req,res,next){
                 date_of_birth,
                 gender,
                 location,
-                profile_img: false
             }).save(err => {
                 if(err){return next(err)}
                 return res.status(201).json({message:"User created succesfully",user})
