@@ -55,7 +55,7 @@ exports.posts_post = function(req,res,next){
                 console.log(io)
                 io.emit('post:create',post)
                 console.log(post)
-                res.status(201).json({message:"post created",io})
+                res.status(201).json({message:"post created"})
             })
     
     })
