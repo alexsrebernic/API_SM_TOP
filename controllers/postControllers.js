@@ -50,12 +50,11 @@ exports.posts_post = function(req,res,next){
                 author:author,
                 date:moment().format('MMMM Do YYYY, h:mm:ss a'),
                 
-            }).save((err) => {
+            }).save((err,postSaved) => {
                 if(err){return next(err)};
                 console.log(io)
-                io.emit('post:create',post)
-                console.log(post)
-                res.status(201).json({message:"post created",id:post._id})
+                io.emit('post:create',postSaved)
+                res.status(201).json({message:"post created",id:postSaved._id})
             })
     
     })
