@@ -5,11 +5,16 @@ const { body,validationResult } = require('express-validator');
 const moment = require("moment")
 
 exports.posts_get = function(req,res,next){
-    Post.find((err,results) => {
+    Post
+    .find()
+    .sort({'date':-1})
+    .limit(10)
+    .exec((err,posts) => {
         if(err){next(err)}
-        res.json(results)
+        return res.status(200).json(posts)
     })
 }
+
 exports.post_delete = function(req,res,next){
     jwt.verify(req.token,process.env.SECRET_KEY_JWT,(err,authData) => {
         if (err){return res.status(403)}
