@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs')
 const { body,validationResult } = require('express-validator');
 var Isemail = require('isemail');
+const Post = require('../models/post');
 dotenv.config()
 
 exports.users_get = function (req,res,next){
@@ -20,17 +21,31 @@ exports.users_get = function (req,res,next){
     })
 }
 exports.user_get = function (req,res,next){
-    User.findById(req.params.id,function(err,user) {
-        if(!(user)){return res.status(404).json({message:"User doesn't exists"})}
+    User.findById(req.params.id)
+    .populate("notifications")
+  
+    .exec(function(err,user) {
         if(err){return next(err)}
-        return res.status(200).json(user)
+        User.populate(user.notifications,
+            {
+                path:"author",
+            select: 'full_name profile_img _id'
+
+
+            },
+            (err, userNotifications) => {
+                if(!(user)){return res.status(404).json({message:"User doesn't exists"})}
+                if(err){return next(err)}
+                return res.status(200).json(user)
+            }
+            )
+      
     })
 }
 exports.user_current_get = function(req,res,next){
-    console.log(req)
     jwt.verify(req.token,process.env.SECRET_KEY_JWT,(err,authData)=> {
         if(err){return res.status(403)}
-        return res.status(200).json({authData})
+        return res.status(200).json({userId:authData.user._id})
     })
 }
 exports.user_delete = function(req,res,next){
@@ -53,7 +68,6 @@ exports.users_sign_up_post = function(req,res,next){
     if(password !== secondpassword) {return res.status(401).json({message:"Passwords doesn't match"})}
     User.find({email:email},(err,user) => {
         if(err){return next(err)}
-        console.log(user)
         if(user.length){return res.status(409).json({message:"This email is already in use",user})}
         bcrypt.hash(password,10,(err,hashedPassword) => {
             if(err){return next(err)}
@@ -78,7 +92,6 @@ exports.users_sign_up_post = function(req,res,next){
 }
 
 exports.users_log_in_post = function(req,res,next){
-    console.log(req.body)
     let { email,password } = req.body
     User.findOne({email},(err,user) => {
         if(err) {next(err)}
@@ -106,3 +119,20 @@ exports.users_log_in_post = function(req,res,next){
   
 }
 
+exports.user_posts_get = function(req,res,next){
+    let id = req.params.id;
+    User.findById(id,{'posts':1})
+    .populate('posts')
+    .exec((err,posts) => {
+        if(err){return next(err)}
+        Post.populate(posts.posts, {
+            path:'author',
+            select: 'full_name profile_img _id'
+        },(err,postPopulated) => {
+            console.log(postPopulated)
+            if(err){return next(err)}
+            res.status(200).json({"posts":postPopulated})
+        })
+       
+    })     
+}
