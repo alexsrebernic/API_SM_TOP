@@ -27,6 +27,10 @@ router.get('/user/get_posts/:id',verifyToken,user_controller.user_posts_get)
 router.post('/users/sign_up',user_controller.users_sign_up_post)
 router.post('/users/log_in',user_controller.users_log_in_post)
 router.post('/users/delete/:id',verifyToken,user_controller.user_delete)
+router.post('/user/update_aboutme',verifyToken,user_controller.user_update_about_me)
+router.post('/user/update_gender',verifyToken,user_controller.user_update_gender)
+router.post('/user/update_location',verifyToken,user_controller.user_update_location)
+router.post('/user/update_date_of_birth',verifyToken,user_controller.user_update_date_of_birth)
 
 // POST ROUTERS
 router.get('/posts',verifyToken,post_controller.posts_get)
@@ -49,6 +53,8 @@ router.post('/comments/delete/:id',verifyToken,comment_controller.comment_delete
 
 //NOTIFICATION'S ROUTERS
 router.post('/notification/:id',verifyToken,notification_controller.notification_update)
+router.post('/notifications/send_friend_request',verifyToken,notification_controller.notification_friend_request_create)
+router.post('/notifications/accept_friend_request',verifyToken,notification_controller.notification_friend_request_accept)
 
 
 module.exports = router;

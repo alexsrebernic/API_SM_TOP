@@ -88,7 +88,7 @@ exports.posts_post = function(req,res,next){
                     if(err){return next(err)}
                     io.emit('post:create',postPopulated)
                 })
-                User.findByIdAndUpdate(authData.user._id,{"$push":{"posts":postSaved}},(err,user) => {
+                User.findByIdAndUpdate(authData.user._id,{$push:{"posts":{$each:[postSaved],$position:0}}},(err,user) => {
                     if(err){return next(err)}
                 res.status(201).json({message:"post created",id:postSaved._id,user})
                 })
@@ -113,7 +113,6 @@ exports.post_like_post = (req,res,next) => {
                     if(err){return next(err)}
                     User.findByIdAndUpdate(creator_of_post,{$push:{"notifications":{$each:[notificationSaved._id],$position:0}}},{new:true},(err,user) => {
                         if(err){return next(err)}
-                        console.log(user)
                     })
                 })
             }
@@ -121,7 +120,6 @@ exports.post_like_post = (req,res,next) => {
         Post.findByIdAndUpdate(id,{'$push':{"likes":author}},{new: true})
         .populate("author",{"full_name":1,"profile_img":1,"_id":1})
         .exec((err,post) => {
-            console.log(post,"like created")
             if(err){return next(err)}
             io.emit("post:update",post)
             res.status(201).json('post liked')

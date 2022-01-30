@@ -10,10 +10,12 @@ var userSchema = new Schema(
       full_name:{type:String,required:true},
       date_of_birth:{type:String,required:true},
       gender:{type:String,required:false},
+      about_me:{type:String,required:false},
       password: {type:String,required:true},
       details:{type:String,required:false},
       location:{type:String,required:false},
       posts:[{type:Schema.Types.ObjectId,required:false,ref:"Post"}],
+      friend_requests:[{type:Schema.Types.ObjectId,required:false,ref:"User"}],
       friends:[{type:Schema.Types.ObjectId,required:false,ref:"User"}],
       chats:[{type:Schema.Types.ObjectId,required:false,ref:"Chat"}],
       notifications:[{type:Schema.Types.ObjectId,required:false,ref:"Notification"}]

@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs')
 const { body,validationResult } = require('express-validator');
 var Isemail = require('isemail');
 const Post = require('../models/post');
+const io = require('../utils/websocket/index')
+
 dotenv.config()
 
 exports.users_get = function (req,res,next){
@@ -23,12 +25,13 @@ exports.users_get = function (req,res,next){
 exports.user_get = function (req,res,next){
     User.findById(req.params.id)
     .populate("notifications")
-  
+    .populate("friends",{full_name:1,profile_img:1,_id:1})
+    .populate("posts")
     .exec(function(err,user) {
         if(err){return next(err)}
-        User.populate(user.notifications,
+        User.populate(user,
             {
-                path:"author",
+                path:"notifications.author posts.author",
             select: 'full_name profile_img _id'
 
 
@@ -129,10 +132,99 @@ exports.user_posts_get = function(req,res,next){
             path:'author',
             select: 'full_name profile_img _id'
         },(err,postPopulated) => {
-            console.log(postPopulated)
             if(err){return next(err)}
             res.status(200).json({"posts":postPopulated})
         })
        
     })     
+}
+exports.user_update_about_me = function(req,res,next){
+    const {user,text} = req.body
+    User.findByIdAndUpdate(user,{"about_me":text},{new:true})
+    .populate("notifications")
+    .populate("friends",{full_name:1,profile_img:1,_id:1})
+    .populate("posts")
+    .exec(function(err,user) {
+        if(err){return next(err)}
+        User.populate(user,
+            {
+                path:"notifications.author posts.author",
+                select: 'full_name profile_img _id'
+
+
+            },
+            (err, userUpdated) => {
+                if(!(user)){return res.status(404).json({message:"User doesn't exists"})}
+                if(err){return next(err)}
+                io.emit('user:update',userUpdated)
+                return res.status(200).json(user)
+            }
+            )
+        })
+}
+exports.user_update_gender = function(req,res,next){
+    const {user,gender} = req.body
+    User.findByIdAndUpdate(user,{"gender":gender},{new:true})
+    .populate("notifications")
+    .populate("friends",{full_name:1,profile_img:1,_id:1})
+    .populate("posts")
+    .exec(function(err,user) {
+        if(err){return next(err)}
+        User.populate(user,
+            {
+                path:"notifications.author posts.author",
+                select: 'full_name profile_img _id'
+            },
+            (err, userUpdated) => {
+                if(!(user)){return res.status(404).json({message:"User doesn't exists"})}
+                if(err){return next(err)}
+                io.emit('user:update',userUpdated)
+                return res.status(200).json(user)
+            }
+            )
+        })
+}
+exports.user_update_location = function(req,res,next){
+    const {user,location} = req.body
+    User.findByIdAndUpdate(user,{"location":location},{new:true})
+    .populate("notifications")
+    .populate("friends",{full_name:1,profile_img:1,_id:1})
+    .populate("posts")
+    .exec(function(err,user) {
+        if(err){return next(err)}
+        User.populate(user,
+            {
+                path:"notifications.author posts.author",
+                select: 'full_name profile_img _id'
+            },
+            (err, userUpdated) => {
+                if(!(user)){return res.status(404).json({message:"User doesn't exists"})}
+                if(err){return next(err)}
+                io.emit('user:update',userUpdated)
+                return res.status(200).json(user)
+            }
+            )
+        })
+}
+exports.user_update_date_of_birth = function(req,res,next){
+    const {user,date} = req.body
+    User.findByIdAndUpdate(user,{"date_of_birth":date},{new:true})
+    .populate("notifications")
+    .populate("friends",{full_name:1,profile_img:1,_id:1})
+    .populate("posts")
+    .exec(function(err,user) {
+        if(err){return next(err)}
+        User.populate(user,
+            {
+                path:"notifications.author posts.author",
+                select: 'full_name profile_img _id'
+            },
+            (err, userUpdated) => {
+                if(!(user)){return res.status(404).json({message:"User doesn't exists"})}
+                if(err){return next(err)}
+                io.emit('user:update',userUpdated)
+                return res.status(200).json(user)
+            }
+            )
+        })
 }
