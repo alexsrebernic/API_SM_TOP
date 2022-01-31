@@ -1,4 +1,4 @@
-const io = require('socket.io')(3001,{cors:'localhost:3000'})
+const io = require('socket.io')(process.env.PORT || 4000,{cors:'localhost:3000'})
 
 const sockets = []
 io.on("connection",socket => {
@@ -21,7 +21,6 @@ io.on("connection",socket => {
 
     })
     socket.on('chat:create',chat => {
-        console.log(chat)
         socket.to(sockets[chat.user1]).emit("chat:create:response",chat)
         socket.to(sockets[chat.user2]).emit("chat:create:response",chat)
     })
