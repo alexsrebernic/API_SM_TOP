@@ -4,6 +4,7 @@ const user_controller = require('../controllers/userController')
 const post_controller = require("../controllers/postControllers")
 const comment_controller = require('../controllers/commentController')
 const notification_controller = require('../controllers/notificationController')
+const chat_controller = require('../controllers/chatController')
 // FUNCTION VERIFY TOKEN
 function verifyToken(req,res,next){
     const bearerHeader = req.headers['authorization']
@@ -45,7 +46,7 @@ router.post('/post/undodislike/:id',verifyToken,post_controller.post_undodislike
 router.post('/posts',verifyToken,post_controller.posts_post)
 router.post('/posts/delete/:id',verifyToken,post_controller.post_delete)
 
-// MESSAGES ROUTERS
+// COMMENTS ROUTERS
 router.get('/comments',verifyToken,comment_controller.comments_get)
 router.get('/comments/:id',verifyToken,comment_controller.comment_get)
 router.post('/comments',verifyToken,comment_controller.comments_post)
@@ -56,5 +57,6 @@ router.post('/notification/:id',verifyToken,notification_controller.notification
 router.post('/notifications/send_friend_request',verifyToken,notification_controller.notification_friend_request_create)
 router.post('/notifications/accept_friend_request',verifyToken,notification_controller.notification_friend_request_accept)
 
-
+// MESSAGES ROUTERS
+router.post('/message/send',verifyToken,chat_controller.send_message)
 module.exports = router;

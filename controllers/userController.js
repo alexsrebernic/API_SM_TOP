@@ -27,16 +27,21 @@ exports.user_get = function (req,res,next){
     .populate("notifications")
     .populate("friends",{full_name:1,profile_img:1,_id:1})
     .populate("posts")
+    .populate("chats")
     .exec(function(err,user) {
         if(err){return next(err)}
         User.populate(user,
             {
-                path:"notifications.author posts.author",
-            select: 'full_name profile_img _id'
+                path:"notifications.author posts.author chats.messages",
+            select: 'full_name profile_img _id message author date'
 
 
             },
             (err, userNotifications) => {
+                User.populate(user,
+                    {
+                        path:"chats.messages._id"
+                    })
                 if(!(user)){return res.status(404).json({message:"User doesn't exists"})}
                 if(err){return next(err)}
                 return res.status(200).json(user)
