@@ -1,4 +1,5 @@
-const io = require('socket.io')(4000,{cors:'localhost:3000'})
+const app = require('../../app')
+const io = require('socket.io')(app.server,{cors:'localhost:3000'})
 
 const sockets = []
 io.on("connection",socket => {
