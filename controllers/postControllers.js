@@ -2,7 +2,7 @@ const async = require('async');
 const Post = require('../models/post')
 const jwt = require("jsonwebtoken");
 const { body,validationResult } = require('express-validator');
-const io = require('../utils/websocket/index')
+const {io} = require("../app")
 const moment = require("moment");
 const User = require('../models/user');
 const Notification = require('../models/notification');
@@ -102,7 +102,6 @@ exports.post_like_post = (req,res,next) => {
     Notification.find({author,post:id,like:true},{},(err,user) => {
         if(err){return next(err)}
         if(!(user.length)){
-            console.log(author !== creator_of_post)
             if(author !== creator_of_post){
                 const notification = new Notification({
                     author,
@@ -153,7 +152,6 @@ exports.post_undolike_post = (req,res,next) => {
         Post.findByIdAndUpdate(id,{$pull:{likes:author}},{new: true})
         .populate('author',{"full_name":1,"profile_img":1,"_id":1})
         .exec((err,post) => {
-            console.log(post,"undo like")
             if(err){return next(err)}
             io.emit("post:update",post)
         })
@@ -167,7 +165,6 @@ exports.post_undodislike_post = (req,res,next) => {
         Post.findByIdAndUpdate(id,{$pull:{dislikes:author}},{new: true})
         .populate('author',{"full_name":1,"profile_img":1,"_id":1})
         .exec((err,post) => {
-            console.log(post,"undo dislike")
             if(err){return next(err)}
             io.emit("post:update",post)
         })

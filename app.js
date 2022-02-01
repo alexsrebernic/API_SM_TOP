@@ -10,8 +10,9 @@ dotenv.config()
 const app = express()
 const http = require('http')
 const server = http.createServer(app)
-const io = require('./utils/websocket/index');
-
+const io = require('socket.io')(server,{cors:'https://61f988eae9e33300075c7331--condescending-chandrasekhar-2a90a5.netlify.app'})
+module.exports = {io}
+const ioServer = require('./utils/websocket/index')
 // MONGO DB CONNECTION
 var dev_db_url = 'mongodb+srv://cooluser:coolpassword@cluster0-mbdj7.mongodb.net/local_library?retryWrites=true'
 var mongoDB = process.env.MONGODB_URI || dev_db_url;
@@ -21,7 +22,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const apiRouter = require('./routes/api')
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "https://61f988eae9e33300075c7331--condescending-chandrasekhar-2a90a5.netlify.app");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
   next();
 });
@@ -54,4 +55,3 @@ app.use(function(req, res, next) {
 server.listen(process.env.PORT || 4000,() => {
   console.log('listening on port 4000')
 })
-module.exports = {app,server}

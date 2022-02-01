@@ -6,8 +6,7 @@ const bcrypt = require('bcryptjs')
 const { body,validationResult } = require('express-validator');
 var Isemail = require('isemail');
 const Post = require('../models/post');
-const io = require('../utils/websocket/index')
-
+const {io} = require("../app")
 dotenv.config()
 
 exports.users_get = function (req,res,next){

@@ -1,6 +1,6 @@
 const Post = require('../models/post')
 const jwt = require("jsonwebtoken");
-const io = require('../utils/websocket/index')
+const {io} = require("../app")
 const Notification = require('../models/notification');
 const User = require("../models/user")
 exports.notification_update = (req,res,next) => {
@@ -9,7 +9,6 @@ exports.notification_update = (req,res,next) => {
     Notification.findByIdAndUpdate(id,{"clicked":true},{new:true},(err,notification) => {
         console.log(err)
         if(err){return next(err)}
-        console.log(notification)
     })
     User.findById(user)
     .populate('notifications')
@@ -21,7 +20,6 @@ exports.notification_update = (req,res,next) => {
             {path:"notifications.author"}
             ,(err,userUpdated) => {
                 if(err){return next(err)}
-                console.log(userUpdated)
                 io.emit("user:update",userUpdated)
             })
     })
@@ -69,7 +67,6 @@ exports.notification_friend_request_accept = (req,res,next) => {
         if(err){return next(err)}
     })
     User.findByIdAndUpdate(user,{$pull:{"friends":author}},{new:true},(err,userUpdated) => {
-        console.log(userUpdated)
         User.findByIdAndUpdate(userUpdated,{$push:{"friends":{$each:[author],$position:0}}},{new:true})
             .populate('friends')
             .populate('notifications')
@@ -78,7 +75,6 @@ exports.notification_friend_request_accept = (req,res,next) => {
                     {path:"notifications.author"}
                     ,(err,userUpdated) => {
                         if(err){return next(err)}
-                        console.log(userUpdated)
                         io.emit("user:update",userUpdated)
                     })
             

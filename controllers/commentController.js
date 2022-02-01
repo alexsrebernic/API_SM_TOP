@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const Comment = require('../models/comment')
 const moment = require("moment")
 const Post = require('../models/post')
-const io = require('../utils/websocket/index');
+const {io} = require("../app")
 const User = require('../models/user');
 const Notification = require('../models/notification')
 const mongoose = require('mongoose')
@@ -26,7 +26,6 @@ exports.comment_delete = (req,res,next) => {
     jwt.verify(req.token,process.env.SECRET_KEY_JWT,(err,authData) => {
         if(err){return res.status(403)}
         Comment.findByIdAndDelete(req.params.id,(err,comment) => {
-            console.log(comment.post,comment._id)
             Post.findByIdAndUpdate(comment.post,{$pull:{comments:comment._id}},{new:true},(err,postUpdated) => {
                 Post.populate(postUpdated, {
                     path:'author',
@@ -90,10 +89,8 @@ exports.comments_post = (req,res,next) => {
                     post:post,
                     clicked:false
                 }).save((err,notificationSaved) => {
-                    console.log(notificationSaved)
                  User.findByIdAndUpdate(creator_of_post,{$push:{"notifications":{$each:[notificationSaved._id],$position:0}}},{new:true},(err,user) => {
                     if(err){return next(err)}
-                    console.log(user)
                 })
                 })
             }

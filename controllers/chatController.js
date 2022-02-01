@@ -1,4 +1,4 @@
-const io = require('../utils/websocket/index');
+const {io} = require("../app")
 const User = require('../models/user');
 const Notification = require('../models/notification')
 const Chat = require('../models/chat')

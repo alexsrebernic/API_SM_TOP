@@ -1,6 +1,4 @@
-const app = require('../../app')
-const io = require('socket.io')(app.server,{cors:'localhost:3000'})
-
+const {io} = require('../../app')
 const sockets = []
 io.on("connection",socket => {
     console.log("New user connected with id:",socket.id)
@@ -17,6 +15,8 @@ io.on("connection",socket => {
         sockets.splice(sockets.findIndex(id => id === socket._id), 1);
       });
     socket.on("chat:update",chat => {
+        console.log(chat)
+        console.log(chat.user1,sockets[chat.user1])
         socket.to(sockets[chat.user1]).emit("chat:update:response",chat)
         socket.to(sockets[chat.user2]).emit("chat:update:response",chat)
 
@@ -26,5 +26,4 @@ io.on("connection",socket => {
         socket.to(sockets[chat.user2]).emit("chat:create:response",chat)
     })
 })
-
 module.exports = io
