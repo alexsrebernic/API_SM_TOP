@@ -54,4 +54,4 @@ app.use(function(req, res, next) {
 server.listen(process.env.PORT || 4000,() => {
   console.log('listening on port 4000')
 })
-module.exports = app
+module.exports = {app,server}
