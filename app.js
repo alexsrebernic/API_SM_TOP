@@ -10,7 +10,7 @@ dotenv.config()
 const app = express()
 const http = require('http')
 const server = http.createServer(app)
-const io = require('socket.io')(server,{cors:'https://61fa8443c1db7200070ca5a6--condescending-chandrasekhar-2a90a5.netlify.app'})
+const io = require('socket.io')(server,{cors:'https://61f9afa2e259cc0007af595f--condescending-chandrasekhar-2a90a5.netlify.app'})
 module.exports = {io}
 const ioServer = require('./utils/websocket/index')
 // MONGO DB CONNECTION
@@ -22,7 +22,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const apiRouter = require('./routes/api')
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://61fa8443c1db7200070ca5a6--condescending-chandrasekhar-2a90a5.netlify.app");
+  res.header("Access-Control-Allow-Origin", "https://61f9afa2e259cc0007af595f--condescending-chandrasekhar-2a90a5.netlify.app");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
   next();
 });
